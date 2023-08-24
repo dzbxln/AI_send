@@ -32,6 +32,8 @@ public class AImain {
     public static void main(String[] args) throws Exception {
         System.getProperties().setProperty("webdriver.chrome.driver", "C:\\Users\\公用\\AppData\\Local\\Google\\Chrome\\Application\\chromedriver.exe");
         ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.addArguments("--headless");
+        chromeOptions.addArguments("--disable-gpu");
         ChromeDriver chromeDriver = new ChromeDriver(chromeOptions);
         chromeDriver.get("https://huitu.xianyun.cool/");
         chromeDriver.manage().window().maximize();
