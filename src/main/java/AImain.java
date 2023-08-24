@@ -36,12 +36,12 @@ public class AImain {
         chromeOptions.addArguments("--disable-gpu");
         ChromeDriver chromeDriver = new ChromeDriver(chromeOptions);
         chromeDriver.get("https://huitu.xianyun.cool/");
-        chromeDriver.manage().window().maximize();
-        Robot robot = new Robot();
-        robot.keyPress(KeyEvent.VK_ALT);
-        robot.keyPress(KeyEvent.VK_TAB);
-        robot.keyRelease(KeyEvent.VK_TAB);
-        robot.keyRelease(KeyEvent.VK_ALT);
+//        chromeDriver.manage().window().maximize();
+//        Robot robot = new Robot();
+//        robot.keyPress(KeyEvent.VK_ALT);
+//        robot.keyPress(KeyEvent.VK_TAB);
+//        robot.keyRelease(KeyEvent.VK_TAB);
+//        robot.keyRelease(KeyEvent.VK_ALT);
         try {
             // 核心逻辑
             WebElement loginElement2 = new WebDriverWait(chromeDriver, Duration.ofSeconds(10).toMillis()).until(
