@@ -1,6 +1,6 @@
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 /**
  * 元数据：
@@ -79,6 +79,16 @@ public class hairList {
     );
 
     public static String hair(){
-        return null;
+        String Hair = "";
+        Random random = new Random();
+        int corol = random.nextInt(Hair_corol.size());
+        Hair += Hair_corol.get(corol);
+        int length = random.nextInt(Hair_length.size());
+        Hair += Hair_length.get(length);
+        int style = random.nextInt(Hair_style.size());
+        Hair += Hair_style.get(style);
+        int bangs = random.nextInt(Hair_bangs.size());
+        Hair += Hair_bangs.get(bangs);
+        return Hair;
     }
 }
