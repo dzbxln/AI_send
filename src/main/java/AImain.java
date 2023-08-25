@@ -32,16 +32,16 @@ public class AImain {
     public static void main(String[] args) throws Exception {
         System.getProperties().setProperty("webdriver.chrome.driver", "C:\\Users\\公用\\AppData\\Local\\Google\\Chrome\\Application\\chromedriver.exe");
         ChromeOptions chromeOptions = new ChromeOptions();
-        chromeOptions.addArguments("--headless");
-        chromeOptions.addArguments("--disable-gpu");
+//        chromeOptions.addArguments("--headless");
+//        chromeOptions.addArguments("--disable-gpu");
         ChromeDriver chromeDriver = new ChromeDriver(chromeOptions);
         chromeDriver.get("https://huitu.xianyun.cool/");
-//        chromeDriver.manage().window().maximize();
-//        Robot robot = new Robot();
-//        robot.keyPress(KeyEvent.VK_ALT);
-//        robot.keyPress(KeyEvent.VK_TAB);
-//        robot.keyRelease(KeyEvent.VK_TAB);
-//        robot.keyRelease(KeyEvent.VK_ALT);
+        chromeDriver.manage().window().maximize();
+        Robot robot = new Robot();
+        robot.keyPress(KeyEvent.VK_ALT);
+        robot.keyPress(KeyEvent.VK_TAB);
+        robot.keyRelease(KeyEvent.VK_TAB);
+        robot.keyRelease(KeyEvent.VK_ALT);
         try {
             // 核心逻辑
             WebElement loginElement2 = new WebDriverWait(chromeDriver, Duration.ofSeconds(10).toMillis()).until(
@@ -83,7 +83,10 @@ public class AImain {
 
             List<WebElement> elements2 = chromeDriver.findElements(By.xpath("//*[@class=\"scroll-hide svelte-4xt1ch input-tag-append autocomplete\"]"));
             elements2.get(0).click();
-            elements2.get(0).sendKeys("incredibly absurdres,wallpaper,personification,real,in winter,white hair,asymmetric bangs,heterochromia,glamor,bishoujo,medium_shot,full_shot,smile,naughty_face,sleepy,");
+            String send = "incredibly absurdres,wallpaper,personification,real,in winter,glamor,bishoujo,smile,naughty_face,sleepy,";
+            send += send + hairList.hair();
+            send += send + eyesList.eyes();
+            elements2.get(0).sendKeys(send);
             Thread.sleep(2000);
             elements2.get(0).sendKeys(Keys.ENTER);
             Thread.sleep(2000);
