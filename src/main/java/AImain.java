@@ -7,6 +7,8 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
+import org.openqa.selenium.support.events.WebDriverEventListener;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -37,11 +39,13 @@ public class AImain {
         ChromeDriver chromeDriver = new ChromeDriver(chromeOptions);
         chromeDriver.get("https://huitu.xianyun.cool/");
         chromeDriver.manage().window().maximize();
-        Robot robot = new Robot();
-        robot.keyPress(KeyEvent.VK_ALT);
-        robot.keyPress(KeyEvent.VK_TAB);
-        robot.keyRelease(KeyEvent.VK_TAB);
-        robot.keyRelease(KeyEvent.VK_ALT);
+        EventFiringWebDriver eventDriver = new EventFiringWebDriver(chromeDriver);
+        eventDriver.register(new CustomWebDriverEventListener());
+//        Robot robot = new Robot();
+//        robot.keyPress(KeyEvent.VK_ALT);
+//        robot.keyPress(KeyEvent.VK_TAB);
+//        robot.keyRelease(KeyEvent.VK_TAB);
+//        robot.keyRelease(KeyEvent.VK_ALT);
         try {
             // 核心逻辑
             WebElement loginElement2 = new WebDriverWait(chromeDriver, Duration.ofSeconds(10).toMillis()).until(
@@ -83,9 +87,10 @@ public class AImain {
 
             List<WebElement> elements2 = chromeDriver.findElements(By.xpath("//*[@class=\"scroll-hide svelte-4xt1ch input-tag-append autocomplete\"]"));
             elements2.get(0).click();
-            String send = "incredibly absurdres,wallpaper,personification,real,in winter,glamor,bishoujo,smile,naughty_face,sleepy,";
-            send += send + hairList.hair();
-            send += send + eyesList.eyes();
+            String send = "incredibly absurdres,wallpaper,personification,real,in winter,glamor,";
+            send += hairList.hair();
+            send += eyesList.eyes();
+            send += characterList.character();
             elements2.get(0).sendKeys(send);
             Thread.sleep(2000);
             elements2.get(0).sendKeys(Keys.ENTER);
@@ -151,12 +156,12 @@ public class AImain {
 
             JSONObject image = new JSONObject().putOpt("base64",base64Image).putOpt("md5",md5);
             paramJson.putOpt("image",image);
-            JSONObject sendRe = JSONUtil.parseObj(HttpUtil.post("https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=a5ad8503-dc80-4d0a-adb9-8421dc0d7e2e", paramJson.toString()));
-            System.out.println(sendRe);
+//            JSONObject sendRe = JSONUtil.parseObj(HttpUtil.post("https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=a5ad8503-dc80-4d0a-adb9-8421dc0d7e2e", paramJson.toString()));
+//            System.out.println(sendRe);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         } finally {
-            chromeDriver.quit();
+//            chromeDriver.quit();
         }
     }
 
@@ -168,6 +173,152 @@ public class AImain {
                 outputStream.write(buffer, 0, len);
             }
             return outputStream.toByteArray();
+        }
+    }
+
+    // 自定义 WebDriverEventListener
+    static class CustomWebDriverEventListener implements WebDriverEventListener {
+
+        @Override
+        public void beforeAlertAccept(WebDriver webDriver) {
+
+        }
+
+        @Override
+        public void afterAlertAccept(WebDriver webDriver) {
+
+        }
+
+        @Override
+        public void afterAlertDismiss(WebDriver webDriver) {
+
+        }
+
+        @Override
+        public void beforeAlertDismiss(WebDriver webDriver) {
+
+        }
+
+        @Override
+        public void beforeNavigateTo(String url, WebDriver driver) {
+            // 执行导航之前的操作
+        }
+
+        @Override
+        public void afterNavigateTo(String url, WebDriver driver) {
+            // 执行导航之后的操作
+        }
+
+        @Override
+        public void beforeNavigateBack(WebDriver webDriver) {
+
+        }
+
+        @Override
+        public void afterNavigateBack(WebDriver webDriver) {
+
+        }
+
+        @Override
+        public void beforeNavigateForward(WebDriver webDriver) {
+
+        }
+
+        @Override
+        public void afterNavigateForward(WebDriver webDriver) {
+
+        }
+
+        @Override
+        public void beforeNavigateRefresh(WebDriver webDriver) {
+
+        }
+
+        @Override
+        public void afterNavigateRefresh(WebDriver webDriver) {
+
+        }
+
+        @Override
+        public void beforeFindBy(By by, WebElement webElement, WebDriver webDriver) {
+
+        }
+
+        @Override
+        public void afterFindBy(By by, WebElement webElement, WebDriver webDriver) {
+
+        }
+
+        @Override
+        public void beforeClickOn(WebElement webElement, WebDriver webDriver) {
+
+        }
+
+        @Override
+        public void afterClickOn(WebElement webElement, WebDriver webDriver) {
+
+        }
+
+        @Override
+        public void beforeChangeValueOf(WebElement webElement, WebDriver webDriver, CharSequence[] charSequences) {
+
+        }
+
+        @Override
+        public void afterChangeValueOf(WebElement webElement, WebDriver webDriver, CharSequence[] charSequences) {
+
+        }
+
+        @Override
+        public void beforeScript(String s, WebDriver webDriver) {
+
+        }
+
+        // 其他监听器方法...
+
+        @Override
+        public void afterScript(String script, WebDriver driver) {
+            // 当执行脚本后，检查浏览器是否关闭，然后关闭驱动
+            if (driver instanceof ChromeDriver && !driver.getWindowHandles().isEmpty()) {
+                // 如果浏览器仍处于打开状态，不关闭驱动
+                return;
+            }
+            driver.quit();
+        }
+
+        @Override
+        public void beforeSwitchToWindow(String s, WebDriver webDriver) {
+
+        }
+
+        @Override
+        public void afterSwitchToWindow(String s, WebDriver webDriver) {
+
+        }
+
+        @Override
+        public void onException(Throwable throwable, WebDriver webDriver) {
+
+        }
+
+        @Override
+        public <X> void beforeGetScreenshotAs(OutputType<X> outputType) {
+
+        }
+
+        @Override
+        public <X> void afterGetScreenshotAs(OutputType<X> outputType, X x) {
+
+        }
+
+        @Override
+        public void beforeGetText(WebElement webElement, WebDriver webDriver) {
+
+        }
+
+        @Override
+        public void afterGetText(WebElement webElement, WebDriver webDriver, String s) {
+
         }
     }
 }

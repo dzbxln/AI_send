@@ -110,9 +110,34 @@ public class eyesList {
             "crying with eyes open,",     // 睁开眼睛哭泣
             "half-closed eyes,"          // 半闭的眼睛
     );
-    public static String eyes(){
+
+    public static String eyes() {
         String eye = "";
         Random random = new Random();
+        int num = random.nextInt(eyeColors.size());
+        eye += eyeColors.get(num);
+        if ((Math.random() < 0.5)) {
+            num = random.nextInt(eyeShadows.size());
+            eye += eyeShadows.get(num);
+        }
+        if ((Math.random() < 0.5)) {
+            num = random.nextInt(eyePatterns.size());
+            eye += eyePatterns.get(num);
+        }
+        num = random.nextInt(pupilVariations.size());
+        eye += pupilVariations.get(num);
+        if ((Math.random() < 0.5)) {
+            num = random.nextInt(eyelashStyles.size());
+            eye += eyelashStyles.get(num);
+        }
+        if ((Math.random() < 0.5)) {
+            num = random.nextInt(otherEyeFeatures.size());
+            eye += otherEyeFeatures.get(num);
+        }
+        if ((Math.random() < 0.5)) {
+            num = random.nextInt(eyeActions.size());
+            eye += eyeActions.get(num);
+        }
         return eye;
     }
 
