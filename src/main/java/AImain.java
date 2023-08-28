@@ -39,13 +39,13 @@ public class AImain {
         ChromeDriver chromeDriver = new ChromeDriver(chromeOptions);
         chromeDriver.get("https://huitu.xianyun.cool/");
         chromeDriver.manage().window().maximize();
-        EventFiringWebDriver eventDriver = new EventFiringWebDriver(chromeDriver);
-        eventDriver.register(new CustomWebDriverEventListener());
-//        Robot robot = new Robot();
-//        robot.keyPress(KeyEvent.VK_ALT);
-//        robot.keyPress(KeyEvent.VK_TAB);
-//        robot.keyRelease(KeyEvent.VK_TAB);
-//        robot.keyRelease(KeyEvent.VK_ALT);
+//        EventFiringWebDriver eventDriver = new EventFiringWebDriver(chromeDriver);
+//        eventDriver.register(new CustomWebDriverEventListener());
+        Robot robot = new Robot();
+        robot.keyPress(KeyEvent.VK_ALT);
+        robot.keyPress(KeyEvent.VK_TAB);
+        robot.keyRelease(KeyEvent.VK_TAB);
+        robot.keyRelease(KeyEvent.VK_ALT);
         try {
             // 核心逻辑
             WebElement loginElement2 = new WebDriverWait(chromeDriver, Duration.ofSeconds(10).toMillis()).until(
@@ -87,7 +87,7 @@ public class AImain {
 
             List<WebElement> elements2 = chromeDriver.findElements(By.xpath("//*[@class=\"scroll-hide svelte-4xt1ch input-tag-append autocomplete\"]"));
             elements2.get(0).click();
-            String send = "incredibly absurdres,wallpaper,personification,real,in winter,glamor,";
+            String send = "huge filesize,colorful,art-book,light_blush,big breasts,gyaru,barefoot,(wide_shot),((full_shot)),";
             send += hairList.hair();
             send += eyesList.eyes();
             send += characterList.character();
@@ -97,7 +97,7 @@ public class AImain {
             Thread.sleep(2000);
 
             elements2.get(1).click();
-            elements2.get(1).sendKeys("((nsfw)),((ugly))),(((duplicate))),((morbid)),((mutilated)),(((tranny)))," +
+            elements2.get(1).sendKeys("((ugly))),(((duplicate))),((morbid)),((mutilated)),(((tranny)))," +
                     "(((trans))),((trannsexual))),(((mutation))),(((deformed)))(((long neck))),((bad anatomy))(((bad proportions))),(((extra arms))),(((extra legs))), " +
                     "(((disfigured))),((more than 2 nipples))),malformed,mutated,(hermaphrodite),((extra limbs)).((missing arms)).((missing legs)).((poorly drawn hands))((poorty drawn face))," +
                     "(mutation,poorly drawn :1.2),(long body :1.3).multiple breasts,cloned face,gross proportions, mutated hands,bad hands,bad feet,long neck,missing limb," +
@@ -156,12 +156,12 @@ public class AImain {
 
             JSONObject image = new JSONObject().putOpt("base64",base64Image).putOpt("md5",md5);
             paramJson.putOpt("image",image);
-//            JSONObject sendRe = JSONUtil.parseObj(HttpUtil.post("https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=a5ad8503-dc80-4d0a-adb9-8421dc0d7e2e", paramJson.toString()));
-//            System.out.println(sendRe);
+            JSONObject sendRe = JSONUtil.parseObj(HttpUtil.post("https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=a5ad8503-dc80-4d0a-adb9-8421dc0d7e2e", paramJson.toString()));
+            System.out.println(sendRe);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         } finally {
-//            chromeDriver.quit();
+            chromeDriver.quit();
         }
     }
 
