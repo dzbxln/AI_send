@@ -135,17 +135,24 @@ public class AImain {
                             return webDriver.findElement(By.xpath("//*[@class=\"svelte-p3y7hu\"]"));
                         }
                     });
-            WebElement elementById = chromeDriver.findElementById("component-1149");
-            List<WebElement> elements1 = elementById.findElements(By.xpath("//*[@class=\"svelte-1cl284s\"]"));
-            elements1.get(0).click();
-            Thread.sleep(200);
-            elements1.get(0).sendKeys("12");
-            Thread.sleep(500);
-            elements1.get(1).click();
-            Thread.sleep(200);
-            elements1.get(1).sendKeys("0.2");
+            WebElement element = chromeDriver.findElement(By.id("component-1197"));
+            List<WebElement> elements1 = element.findElements(By.className("svelte-1cl284s"));
+            System.out.println(elements1.size());
+//            List<WebElement> elements1 = chromeDriver.findElements(By.xpath("//*[@class=\"svelte-1cl284s\"]"));
+//            elements1.get(elements1.size() - 2).click();
+//            elements1.get(elements1.size() - 1).click();
             Thread.sleep(2000);
-            chromeDriver.findElementById("img2img_generate").click();
+//            chromeDriver.findElementById("img2img_generate").click();
+            WebElement loginElement6 = new WebDriverWait(chromeDriver, Duration.ofSeconds(5).toMillis()).until(
+                    new ExpectedCondition<WebElement>() {
+                        @Override
+                        public WebElement apply(WebDriver webDriver) {
+                            return webDriver.findElement(By.xpath("//*[@class=\"lg primary gradio-button svelte-1ipelgc\"]"));
+                        }
+                    });
+            List<WebElement> elements3 = chromeDriver.findElements(By.xpath("//*[@class=\"lg primary gradio-button svelte-1ipelgc\"]"));
+            System.out.println(elements3.size());
+            elements3.get(elements3.size() - 1).click();
             // 图片生成后
             WebElement loginElementImg2 = new WebDriverWait(chromeDriver, Duration.ofSeconds(5).toMillis()).until(
                     new ExpectedCondition<WebElement>() {
@@ -193,6 +200,7 @@ public class AImain {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         } finally {
+//            Thread.sleep(2*60*1000);
             chromeDriver.quit();
         }
     }
@@ -201,7 +209,7 @@ public class AImain {
         byte[] buffer = new byte[1024];
         int len;
         try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
-            while ((len = inputStream.read(buffer)) != -1) {
+;            while ((len = inputStream.read(buffer)) != -1) {
                 outputStream.write(buffer, 0, len);
             }
             return outputStream.toByteArray();
