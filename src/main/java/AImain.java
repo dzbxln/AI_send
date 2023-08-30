@@ -47,7 +47,7 @@ public class AImain {
         robot.keyRelease(KeyEvent.VK_TAB);
         robot.keyRelease(KeyEvent.VK_ALT);
         try {
-            // 核心逻辑
+            // 当登录界面出现10s后
             WebElement loginElement2 = new WebDriverWait(chromeDriver, Duration.ofSeconds(10).toMillis()).until(
                     new ExpectedCondition<WebElement>() {
                         @Override
@@ -61,8 +61,8 @@ public class AImain {
                 elements.get(1).sendKeys("StormySky$2023");
                 chromeDriver.findElement(By.xpath("//*[@class=\"lg primary svelte-1ipelgc\"]")).click();
             }
-            // 核心逻辑
-            WebElement loginElement = new WebDriverWait(chromeDriver, Duration.ofSeconds(30).toMillis()).until(
+            // 当关键字文本框出现10s后
+            WebElement loginElement = new WebDriverWait(chromeDriver, Duration.ofSeconds(5).toMillis()).until(
                     new ExpectedCondition<WebElement>() {
                         @Override
                         public WebElement apply(WebDriver webDriver) {
@@ -87,7 +87,7 @@ public class AImain {
 
             List<WebElement> elements2 = chromeDriver.findElements(By.xpath("//*[@class=\"scroll-hide svelte-4xt1ch input-tag-append autocomplete\"]"));
             elements2.get(0).click();
-            String send = "huge filesize,colorful,art-book,light_blush,big breasts,gyaru,barefoot,(wide_shot),((full_shot)),";
+            String send = "huge filesize,colorful,art-book,light_blush,breasts,gyaru,barefoot,(wide_shot),((full_shot)),";
             send += hairList.hair();
             send += eyesList.eyes();
             send += characterList.character();
@@ -115,16 +115,48 @@ public class AImain {
             Thread.sleep(2000);
             chromeDriver.findElement(By.xpath("//*[@class=\"lg primary gradio-button svelte-1ipelgc\"]")).click();
 
-            // 核心逻辑
-            WebElement loginElement3 = new WebDriverWait(chromeDriver, Duration.ofSeconds(20).toMillis()).until(
+            // 图片生成后
+            WebElement loginElement3 = new WebDriverWait(chromeDriver, Duration.ofSeconds(5).toMillis()).until(
                     new ExpectedCondition<WebElement>() {
                         @Override
                         public WebElement apply(WebDriver webDriver) {
                             return webDriver.findElement(By.xpath("//*[@class=\"svelte-g4rw9\"]"));
                         }
                     });
+            Thread.sleep(2000);
+
+            // 进入以图绘图
+            chromeDriver.findElementById("img2img_tab").click();
+            // 确认跳转完成
+            WebElement loginElementImg = new WebDriverWait(chromeDriver, Duration.ofSeconds(5).toMillis()).until(
+                    new ExpectedCondition<WebElement>() {
+                        @Override
+                        public WebElement apply(WebDriver webDriver) {
+                            return webDriver.findElement(By.xpath("//*[@class=\"svelte-p3y7hu\"]"));
+                        }
+                    });
+            WebElement elementById = chromeDriver.findElementById("component-1149");
+            List<WebElement> elements1 = elementById.findElements(By.xpath("//*[@class=\"svelte-1cl284s\"]"));
+            elements1.get(0).click();
+            Thread.sleep(200);
+            elements1.get(0).sendKeys("12");
+            Thread.sleep(500);
+            elements1.get(1).click();
+            Thread.sleep(200);
+            elements1.get(1).sendKeys("0.2");
+            Thread.sleep(2000);
+            chromeDriver.findElementById("img2img_generate").click();
+            // 图片生成后
+            WebElement loginElementImg2 = new WebDriverWait(chromeDriver, Duration.ofSeconds(5).toMillis()).until(
+                    new ExpectedCondition<WebElement>() {
+                        @Override
+                        public WebElement apply(WebDriver webDriver) {
+                            return webDriver.findElement(By.xpath("//*[@class=\"svelte-g4rw9\"]"));
+                        }
+                    });
+            // 确定保存按钮的存在
             chromeDriver.findElementById("save_txt2img").click();
-            WebElement loginElement4 = new WebDriverWait(chromeDriver, Duration.ofSeconds(20).toMillis()).until(
+            WebElement loginElement4 = new WebDriverWait(chromeDriver, Duration.ofSeconds(5).toMillis()).until(
                     new ExpectedCondition<WebElement>() {
                         @Override
                         public WebElement apply(WebDriver webDriver) {
