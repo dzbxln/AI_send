@@ -14,7 +14,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.Duration;
@@ -31,20 +33,18 @@ import java.util.List;
  */
 public class AImain {
     public static void main(String[] args) throws Exception {
-        System.getProperties().setProperty("webdriver.chrome.driver", "C:\\Users\\公用\\AppData\\Local\\Google\\Chrome\\Application\\chromedriver.exe");
+        System.getProperties().setProperty("webdriver.chrome.driver", "C:\\Users\\34006\\AppData\\Local\\Google\\Chrome\\Application\\chromedriver.exe");
         ChromeOptions chromeOptions = new ChromeOptions();
 //        chromeOptions.addArguments("--headless");
 //        chromeOptions.addArguments("--disable-gpu");
         ChromeDriver chromeDriver = new ChromeDriver(chromeOptions);
         chromeDriver.get("https://huitu.xianyun.cool/");
         chromeDriver.manage().window().maximize();
-//        EventFiringWebDriver eventDriver = new EventFiringWebDriver(chromeDriver);
-//        eventDriver.register(new CustomWebDriverEventListener());
-        Robot robot = new Robot();
-        robot.keyPress(KeyEvent.VK_ALT);
-        robot.keyPress(KeyEvent.VK_TAB);
-        robot.keyRelease(KeyEvent.VK_TAB);
-        robot.keyRelease(KeyEvent.VK_ALT);
+//        Robot robot = new Robot();
+//        robot.keyPress(KeyEvent.VK_ALT);
+//        robot.keyPress(KeyEvent.VK_TAB);
+//        robot.keyRelease(KeyEvent.VK_TAB);
+//        robot.keyRelease(KeyEvent.VK_ALT);
         try {
             // 当登录界面出现10s后
             WebElement loginElement2 = new WebDriverWait(chromeDriver, Duration.ofSeconds(10).toMillis()).until(
@@ -86,7 +86,7 @@ public class AImain {
 
             List<WebElement> elements2 = chromeDriver.findElements(By.xpath("//*[@class=\"scroll-hide svelte-4xt1ch input-tag-append autocomplete\"]"));
             elements2.get(0).click();
-            String send = "huge filesize,colorful,art-book,light_blush,medium breasts,gyaru,barefoot,(wide_shot),((full_shot)),";
+            String send = "huge filesize,colorful,art-book,light_blush,medium breasts,gyaru,barefoot,wide_shot,full_shot,";
             send += hairList.hair();
             send += eyesList.eyes();
             send += characterList.character();
@@ -106,11 +106,12 @@ public class AImain {
             elements2.get(1).sendKeys(Keys.ENTER);
             Thread.sleep(2000);
 
-            WebElement range_id_2 = chromeDriver.findElement(By.id("range_id_2"));
-            int size = range_id_2.getSize().width;
-            Actions action = new Actions(chromeDriver);
-            action.clickAndHold(range_id_2).perform();
-            action.dragAndDropBy(range_id_2, size, 0);
+            List<WebElement> elements3 = chromeDriver.findElement(By.id("tab_txt2img"))
+                    .findElement(By.id("component-143")).findElement(By.id("txt2img_steps"))
+                    .findElements(By.className("svelte-1cl284s"));
+            elements3.get(2).clear();
+            elements3.get(2).sendKeys("80");
+
             Thread.sleep(2000);
             chromeDriver.findElement(By.xpath("//*[@class=\"lg primary gradio-button svelte-1ipelgc\"]")).click();
 
@@ -172,28 +173,42 @@ public class AImain {
             HttpURLConnection connection = (HttpURLConnection) url1.openConnection();
             connection.setRequestProperty("Cookie", cookie);
             InputStream inputStream = connection.getInputStream();
-            byte[] bytes = toByteArray(inputStream);
-            String base64Image = Base64.getEncoder().encodeToString(bytes);
+            String saveDirectory = "C:\\Users\\34006\\Desktop\\AI绘图\\";
+            String fileName = getFileNameFromUrl(url1);
+            String savePath = saveDirectory + fileName;
+            OutputStream outputStream = new FileOutputStream(savePath);
+
+            byte[] buffer = new byte[2048];
+            int length;
+
+            while ((length = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, length);
+            }
             inputStream.close();
-
-            JSONObject paramJson = new JSONObject();
-            paramJson.putOpt("msgtype", "image");
-
-            //url路径
-            URL url2=new URL(url);
-            //获取连接
-            HttpURLConnection connection1=(HttpURLConnection)url2.openConnection();
-            connection1.setConnectTimeout(3*1000);
-            //设置请求头
-            connection1.setRequestProperty("User-Agent","Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.110 Safari/537.36");
-            connection1.setRequestProperty("Cookie", cookie);
-            InputStream inputStream1 = connection1.getInputStream();
-            String md5 = DigestUtils.md5Hex(inputStream1);
-
-            JSONObject image = new JSONObject().putOpt("base64",base64Image).putOpt("md5",md5);
-            paramJson.putOpt("image",image);
-            JSONObject sendRe = JSONUtil.parseObj(HttpUtil.post("https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=a5ad8503-dc80-4d0a-adb9-8421dc0d7e2e", paramJson.toString()));
-            System.out.println(sendRe);
+            outputStream.close();
+            System.out.println("图片下载完成并保存");
+//            byte[] bytes = toByteArray(inputStream);
+//            String base64Image = Base64.getEncoder().encodeToString(bytes);
+//            inputStream.close();
+//
+//            JSONObject paramJson = new JSONObject();
+//            paramJson.putOpt("msgtype", "image");
+//
+//            //url路径
+//            URL url2=new URL(url);
+//            //获取连接
+//            HttpURLConnection connection1=(HttpURLConnection)url2.openConnection();
+//            connection1.setConnectTimeout(3*1000);
+//            //设置请求头
+//            connection1.setRequestProperty("User-Agent","Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.110 Safari/537.36");
+//            connection1.setRequestProperty("Cookie", cookie);
+//            InputStream inputStream1 = connection1.getInputStream();
+//            String md5 = DigestUtils.md5Hex(inputStream1);
+//
+//            JSONObject image = new JSONObject().putOpt("base64",base64Image).putOpt("md5",md5);
+//            paramJson.putOpt("image",image);
+//            JSONObject sendRe = JSONUtil.parseObj(HttpUtil.post("https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=a5ad8503-dc80-4d0a-adb9-8421dc0d7e2e", paramJson.toString()));
+//            System.out.println(sendRe);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         } finally {
@@ -213,149 +228,9 @@ public class AImain {
         }
     }
 
-    // 自定义 WebDriverEventListener
-    static class CustomWebDriverEventListener implements WebDriverEventListener {
-
-        @Override
-        public void beforeAlertAccept(WebDriver webDriver) {
-
-        }
-
-        @Override
-        public void afterAlertAccept(WebDriver webDriver) {
-
-        }
-
-        @Override
-        public void afterAlertDismiss(WebDriver webDriver) {
-
-        }
-
-        @Override
-        public void beforeAlertDismiss(WebDriver webDriver) {
-
-        }
-
-        @Override
-        public void beforeNavigateTo(String url, WebDriver driver) {
-            // 执行导航之前的操作
-        }
-
-        @Override
-        public void afterNavigateTo(String url, WebDriver driver) {
-            // 执行导航之后的操作
-        }
-
-        @Override
-        public void beforeNavigateBack(WebDriver webDriver) {
-
-        }
-
-        @Override
-        public void afterNavigateBack(WebDriver webDriver) {
-
-        }
-
-        @Override
-        public void beforeNavigateForward(WebDriver webDriver) {
-
-        }
-
-        @Override
-        public void afterNavigateForward(WebDriver webDriver) {
-
-        }
-
-        @Override
-        public void beforeNavigateRefresh(WebDriver webDriver) {
-
-        }
-
-        @Override
-        public void afterNavigateRefresh(WebDriver webDriver) {
-
-        }
-
-        @Override
-        public void beforeFindBy(By by, WebElement webElement, WebDriver webDriver) {
-
-        }
-
-        @Override
-        public void afterFindBy(By by, WebElement webElement, WebDriver webDriver) {
-
-        }
-
-        @Override
-        public void beforeClickOn(WebElement webElement, WebDriver webDriver) {
-
-        }
-
-        @Override
-        public void afterClickOn(WebElement webElement, WebDriver webDriver) {
-
-        }
-
-        @Override
-        public void beforeChangeValueOf(WebElement webElement, WebDriver webDriver, CharSequence[] charSequences) {
-
-        }
-
-        @Override
-        public void afterChangeValueOf(WebElement webElement, WebDriver webDriver, CharSequence[] charSequences) {
-
-        }
-
-        @Override
-        public void beforeScript(String s, WebDriver webDriver) {
-
-        }
-
-        // 其他监听器方法...
-
-        @Override
-        public void afterScript(String script, WebDriver driver) {
-            // 当执行脚本后，检查浏览器是否关闭，然后关闭驱动
-            if (driver instanceof ChromeDriver && !driver.getWindowHandles().isEmpty()) {
-                // 如果浏览器仍处于打开状态，不关闭驱动
-                return;
-            }
-            driver.quit();
-        }
-
-        @Override
-        public void beforeSwitchToWindow(String s, WebDriver webDriver) {
-
-        }
-
-        @Override
-        public void afterSwitchToWindow(String s, WebDriver webDriver) {
-
-        }
-
-        @Override
-        public void onException(Throwable throwable, WebDriver webDriver) {
-
-        }
-
-        @Override
-        public <X> void beforeGetScreenshotAs(OutputType<X> outputType) {
-
-        }
-
-        @Override
-        public <X> void afterGetScreenshotAs(OutputType<X> outputType, X x) {
-
-        }
-
-        @Override
-        public void beforeGetText(WebElement webElement, WebDriver webDriver) {
-
-        }
-
-        @Override
-        public void afterGetText(WebElement webElement, WebDriver webDriver, String s) {
-
-        }
+    private static String getFileNameFromUrl(URL url) {
+        String urlString = url.toString();
+        return urlString.substring(urlString.lastIndexOf('/') + 1);
     }
+
 }
