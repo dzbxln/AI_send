@@ -127,47 +127,44 @@ public class AImain {
 
             // 进入以图绘图
             chromeDriver.findElementById("img2img_tab").click();
+            Thread.sleep(2000);
+            WebElement tab_img2img = chromeDriver.findElementById("tab_img2img");
             // 确认跳转完成
             WebElement loginElementImg = new WebDriverWait(chromeDriver, Duration.ofSeconds(5).toMillis()).until(
                     new ExpectedCondition<WebElement>() {
                         @Override
                         public WebElement apply(WebDriver webDriver) {
-                            return webDriver.findElement(By.xpath("//*[@class=\"svelte-p3y7hu\"]"));
+                            return tab_img2img.findElement(By.xpath("//*[@class=\"svelte-p3y7hu\"]"));
                         }
                     });
-            WebElement element = chromeDriver.findElement(By.id("component-1197"));
+            WebElement element = tab_img2img.findElement(By.id("component-1197"));
             List<WebElement> elements1 = element.findElements(By.className("svelte-1cl284s"));
-            System.out.println(elements1.size());
-//            List<WebElement> elements1 = chromeDriver.findElements(By.xpath("//*[@class=\"svelte-1cl284s\"]"));
-//            elements1.get(elements1.size() - 2).click();
-//            elements1.get(elements1.size() - 1).click();
+            elements1.get(10).clear();
+            elements1.get(10).sendKeys("0.2");// 重绘幅度
+            elements1.get(2).clear();
+            elements1.get(2).sendKeys("12");//提示词占比
             Thread.sleep(2000);
-//            chromeDriver.findElementById("img2img_generate").click();
-            WebElement loginElement6 = new WebDriverWait(chromeDriver, Duration.ofSeconds(5).toMillis()).until(
-                    new ExpectedCondition<WebElement>() {
-                        @Override
-                        public WebElement apply(WebDriver webDriver) {
-                            return webDriver.findElement(By.xpath("//*[@class=\"lg primary gradio-button svelte-1ipelgc\"]"));
-                        }
-                    });
-            List<WebElement> elements3 = chromeDriver.findElements(By.xpath("//*[@class=\"lg primary gradio-button svelte-1ipelgc\"]"));
-            System.out.println(elements3.size());
-            elements3.get(elements3.size() - 1).click();
+            WebElement element1 = tab_img2img.findElement(By.id("img2img_toprow"))
+                    .findElement(By.id("img2img_actions_column"))
+                    .findElement(By.id("img2img_generate_box"))
+                    .findElement(By.id("img2img_generate"));
+            System.out.println(element1.getTagName());
+            element1.click();
             // 图片生成后
             WebElement loginElementImg2 = new WebDriverWait(chromeDriver, Duration.ofSeconds(5).toMillis()).until(
                     new ExpectedCondition<WebElement>() {
                         @Override
                         public WebElement apply(WebDriver webDriver) {
-                            return webDriver.findElement(By.xpath("//*[@class=\"svelte-g4rw9\"]"));
+                            return tab_img2img.findElement(By.xpath("//*[@class=\"svelte-g4rw9\"]"));
                         }
                     });
             // 确定保存按钮的存在
-            chromeDriver.findElementById("save_txt2img").click();
+            tab_img2img.findElement(By.id("save_img2img")).click();
             WebElement loginElement4 = new WebDriverWait(chromeDriver, Duration.ofSeconds(5).toMillis()).until(
                     new ExpectedCondition<WebElement>() {
                         @Override
                         public WebElement apply(WebDriver webDriver) {
-                            return webDriver.findElement(By.xpath("//*[@class=\"download svelte-xrr240\"]"));
+                            return tab_img2img.findElement(By.xpath("//*[@class=\"download svelte-xrr240\"]"));
                         }
                     });
             String url = loginElement4.findElement(By.tagName("a")).getAttribute("href");
