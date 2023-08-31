@@ -87,7 +87,7 @@ public class AImain {
 
             List<WebElement> elements2 = chromeDriver.findElements(By.xpath("//*[@class=\"scroll-hide svelte-4xt1ch input-tag-append autocomplete\"]"));
             elements2.get(0).click();
-            String send = "huge filesize,colorful,art-book,light_blush,breasts,gyaru,barefoot,(wide_shot),((full_shot)),";
+            String send = "huge filesize,colorful,art-book,light_blush,medium breasts,gyaru,barefoot,(wide_shot),((full_shot)),";
             send += hairList.hair();
             send += eyesList.eyes();
             send += characterList.character();
