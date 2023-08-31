@@ -7,7 +7,6 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.events.WebDriverEventListener;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -137,13 +136,20 @@ public class AImain {
                             return tab_img2img.findElement(By.xpath("//*[@class=\"svelte-p3y7hu\"]"));
                         }
                     });
+            List<WebElement> element2 = tab_img2img.findElement(By.id("component-1090")).findElement(By.id("img2img_settings"))
+                    .findElement(By.id("sampler_selection_img2img"))
+                    .findElement(By.id("img2img_steps")).findElements(By.className("svelte-1cl284s"));
+            element2.get(2).clear();
+            element2.get(2).sendKeys("80");
+            Thread.sleep(200);
             WebElement element = tab_img2img.findElement(By.id("component-1197"));
             List<WebElement> elements1 = element.findElements(By.className("svelte-1cl284s"));
             elements1.get(10).clear();
             elements1.get(10).sendKeys("0.2");// 重绘幅度
+            Thread.sleep(200);
             elements1.get(2).clear();
             elements1.get(2).sendKeys("12");//提示词占比
-            Thread.sleep(2000);
+            Thread.sleep(200);
             WebElement element1 = tab_img2img.findElement(By.id("img2img_toprow"))
                     .findElement(By.id("img2img_actions_column"))
                     .findElement(By.id("img2img_generate_box"))
@@ -151,13 +157,7 @@ public class AImain {
             System.out.println(element1.getTagName());
             element1.click();
             // 图片生成后
-            WebElement loginElementImg2 = new WebDriverWait(chromeDriver, Duration.ofSeconds(5).toMillis()).until(
-                    new ExpectedCondition<WebElement>() {
-                        @Override
-                        public WebElement apply(WebDriver webDriver) {
-                            return tab_img2img.findElement(By.xpath("//*[@class=\"svelte-g4rw9\"]"));
-                        }
-                    });
+            Thread.sleep(90*1000);
             // 确定保存按钮的存在
             tab_img2img.findElement(By.id("save_img2img")).click();
             WebElement loginElement4 = new WebDriverWait(chromeDriver, Duration.ofSeconds(5).toMillis()).until(
