@@ -22,6 +22,8 @@ import java.net.URL;
 import java.time.Duration;
 import java.util.Base64;
 import java.util.List;
+import java.util.Scanner;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * 元数据：
@@ -33,7 +35,8 @@ import java.util.List;
  */
 public class AImain {
     public static void main(String[] args) throws Exception {
-        for (int f = 0;f <= 3;f++) {
+        String oris;
+        do {
             System.getProperties().setProperty("webdriver.chrome.driver", "C:\\Users\\34006\\AppData\\Local\\Google\\Chrome\\Application\\chromedriver.exe");
             ChromeOptions chromeOptions = new ChromeOptions();
 //        chromeOptions.addArguments("--headless");
@@ -57,8 +60,8 @@ public class AImain {
                         });
                 List<WebElement> elements = chromeDriver.findElements(By.xpath("//*[@class=\"scroll-hide svelte-1pie7s6\"]"));
                 if (elements != null && elements.size() > 0) {
-                    elements.get(0).sendKeys("tempest");
-                    elements.get(1).sendKeys("StormySky$2023");
+                    elements.get(0).sendKeys("enigma");
+                    elements.get(1).sendKeys("MysteriousEnigma%12");
                     chromeDriver.findElement(By.xpath("//*[@class=\"lg primary svelte-1ipelgc\"]")).click();
                 }
                 // 当关键字文本框出现10s后
@@ -87,11 +90,15 @@ public class AImain {
 
                 List<WebElement> elements2 = chromeDriver.findElements(By.xpath("//*[@class=\"scroll-hide svelte-4xt1ch input-tag-append autocomplete\"]"));
                 elements2.get(0).click();
-                String send = "huge filesize,colorful,art-book,light_blush,medium breasts,gyaru,barefoot,wide_shot,full_shot,";
+//                Scanner scanner = new Scanner(System.in);
+//                String shuru = scanner.next();
+                //white_bodystocking,black_pantyhose,black_bodystocking,wide_shot,
+                String send = "nsfw,(((incredibly absurdres))),((huge filesize)),art-book,light_blush,off-shoulder shirt,medium breasts,gyaru,((white_stirrup_legwear)),(legs),unbuttoned clothes,";
                 send += hairList.hair();
                 send += eyesList.eyes();
                 send += characterList.character();
                 elements2.get(0).sendKeys(send);
+//                elements2.get(0).sendKeys(shuru);
                 Thread.sleep(2000);
                 elements2.get(0).sendKeys(Keys.ENTER);
                 Thread.sleep(2000);
@@ -107,12 +114,24 @@ public class AImain {
                 elements2.get(1).sendKeys(Keys.ENTER);
                 Thread.sleep(2000);
 
-                List<WebElement> elements3 = chromeDriver.findElement(By.id("tab_txt2img"))
-                        .findElement(By.id("component-143")).findElement(By.id("txt2img_steps"))
+                List<WebElement> elements3 = chromeDriver.findElement(By.id("tab_txt2img")).findElement(By.id("txt2img_steps"))
                         .findElements(By.className("svelte-1cl284s"));
                 elements3.get(2).clear();
                 elements3.get(2).sendKeys("80");
+                Thread.sleep(200);
+                List<WebElement> elements6 = chromeDriver.findElement(By.id("tab_txt2img")).findElement(By.id("txt2img_column_size"))
+                        .findElement(By.id("txt2img_width")).findElements(By.className("svelte-1cl284s"));
+                elements6.get(2).clear();
+                elements6.get(2).sendKeys("1080");
+                Thread.sleep(200);
+                List<WebElement> elements7 = chromeDriver.findElement(By.id("tab_txt2img")).findElement(By.id("txt2img_column_size"))
+                        .findElement(By.id("txt2img_height")).findElements(By.className("svelte-1cl284s"));
+                elements7.get(2).clear();
+                elements7.get(2).sendKeys("1080");
 
+                chromeDriver.findElement(By.id("txt2img_seed")).findElement(By.xpath("//*[@class=\"svelte-og1zwl\"]")).clear();
+                Thread.sleep(200);
+                chromeDriver.findElement(By.id("txt2img_seed")).findElement(By.xpath("//*[@class=\"svelte-og1zwl\"]")).sendKeys("18319234825");
                 Thread.sleep(2000);
                 chromeDriver.findElement(By.xpath("//*[@class=\"lg primary gradio-button svelte-1ipelgc\"]")).click();
 
@@ -138,7 +157,7 @@ public class AImain {
                                 return tab_img2img.findElement(By.xpath("//*[@class=\"svelte-p3y7hu\"]"));
                             }
                         });
-                List<WebElement> element2 = tab_img2img.findElement(By.id("component-1090")).findElement(By.id("img2img_settings"))
+                List<WebElement> element2 = tab_img2img.findElement(By.id("img2img_settings"))
                         .findElement(By.id("sampler_selection_img2img"))
                         .findElement(By.id("img2img_steps")).findElements(By.className("svelte-1cl284s"));
                 element2.get(2).clear();
@@ -147,19 +166,26 @@ public class AImain {
                 List<WebElement> elements4 =
                         tab_img2img.findElement(By.id("img2img_column_size")).findElement(By.id("img2img_width")).findElements(By.className("svelte-1cl284s"));
                 elements4.get(2).clear();
-                elements4.get(2).sendKeys("1024");
+                elements4.get(2).sendKeys("1080");
                 Thread.sleep(200);
                 List<WebElement> elements5 = tab_img2img.findElement(By.id("img2img_column_size")).findElement(By.id("img2img_height")).findElements(By.className("svelte-1cl284s"));
                 elements5.get(2).clear();
-                elements5.get(2).sendKeys("1024");
+                elements5.get(2).sendKeys("1080");
                 Thread.sleep(200);
-                WebElement element = tab_img2img.findElement(By.id("component-1197"));
-                List<WebElement> elements1 = element.findElements(By.className("svelte-1cl284s"));
-                elements1.get(10).clear();
-                elements1.get(10).sendKeys("0.2");// 重绘幅度
+//                WebElement element = tab_img2img.findElement(By.id("component-4149"));
+//                List<WebElement> elements1 = element.findElements(By.className("svelte-1cl284s"));
+//                elements1.get(10).clear();
+//                elements1.get(10).sendKeys("0.2");// 重绘幅度
+//                Thread.sleep(200);
+//                elements1.get(2).clear();
+//                elements1.get(2).sendKeys("7");//提示词占比
+                List<WebElement> img2img_cfg_scale = tab_img2img.findElement(By.id("img2img_cfg_scale")).findElements(By.className("svelte-1cl284s"));
+                img2img_cfg_scale.get(2).clear();
+                img2img_cfg_scale.get(2).sendKeys("7");
                 Thread.sleep(200);
-                elements1.get(2).clear();
-                elements1.get(2).sendKeys("12");//提示词占比
+                List<WebElement> img2img_denoising_strength = tab_img2img.findElement(By.id("img2img_denoising_strength")).findElements(By.className("svelte-1cl284s"));
+                img2img_denoising_strength.get(2).clear();
+                img2img_denoising_strength.get(2).sendKeys("0.3");
                 Thread.sleep(200);
                 WebElement element1 = tab_img2img.findElement(By.id("img2img_toprow"))
                         .findElement(By.id("img2img_actions_column"))
@@ -168,7 +194,7 @@ public class AImain {
                 System.out.println(element1.getTagName());
                 element1.click();
                 // 图片生成后
-                Thread.sleep(60 * 1000);
+                Thread.sleep(90 * 1000);
                 // 确定保存按钮的存在
                 tab_img2img.findElement(By.id("save_img2img")).click();
                 WebElement loginElement4 = new WebDriverWait(chromeDriver, Duration.ofSeconds(5).toMillis()).until(
@@ -187,53 +213,61 @@ public class AImain {
                 String fileName = getFileNameFromUrl(url1);
                 String savePath = saveDirectory + fileName;
                 OutputStream outputStream = new FileOutputStream(savePath);
-
                 byte[] buffer = new byte[2048];
                 int length;
-
                 while ((length = inputStream.read(buffer)) != -1) {
                     outputStream.write(buffer, 0, length);
                 }
                 inputStream.close();
                 outputStream.close();
                 System.out.println("图片下载完成并保存");
-//            byte[] bytes = toByteArray(inputStream);
-//            String base64Image = Base64.getEncoder().encodeToString(bytes);
-//            inputStream.close();
-//
-//            JSONObject paramJson = new JSONObject();
-//            paramJson.putOpt("msgtype", "image");
-//
-//            //url路径
-//            URL url2=new URL(url);
-//            //获取连接
-//            HttpURLConnection connection1=(HttpURLConnection)url2.openConnection();
-//            connection1.setConnectTimeout(3*1000);
-//            //设置请求头
-//            connection1.setRequestProperty("User-Agent","Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.110 Safari/537.36");
-//            connection1.setRequestProperty("Cookie", cookie);
-//            InputStream inputStream1 = connection1.getInputStream();
-//            String md5 = DigestUtils.md5Hex(inputStream1);
-//
-//            JSONObject image = new JSONObject().putOpt("base64",base64Image).putOpt("md5",md5);
-//            paramJson.putOpt("image",image);
-//            JSONObject sendRe = JSONUtil.parseObj(HttpUtil.post("https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=a5ad8503-dc80-4d0a-adb9-8421dc0d7e2e", paramJson.toString()));
-//            System.out.println(sendRe);
+                System.out.println("是否发送？");
+                Scanner input = new Scanner(System.in);
+                oris = input.next();
+                if ("y".equals(oris) || "Y".equals(oris)) {
+                    URL url11 = new URL(url);
+                    HttpURLConnection connection1 = (HttpURLConnection) url11.openConnection();
+                    connection1.setRequestProperty("Cookie", cookie);
+                    InputStream inputStream1 = connection1.getInputStream();
+                    byte[] bytes = toByteArray(inputStream1);
+                    String base64Image = Base64.getEncoder().encodeToString(bytes);
+                    inputStream.close();
+
+                    JSONObject paramJson = new JSONObject();
+                    paramJson.putOpt("msgtype", "image");
+
+                    //url路径
+                    URL url2 = new URL(url);
+                    //获取连接
+                    HttpURLConnection connection2 = (HttpURLConnection) url2.openConnection();
+                    connection2.setConnectTimeout(3 * 1000);
+                    //设置请求头
+                    connection2.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.110 Safari/537.36");
+                    connection2.setRequestProperty("Cookie", cookie);
+                    InputStream inputStream2 = connection2.getInputStream();
+                    String md5 = DigestUtils.md5Hex(inputStream2);
+
+                    JSONObject image = new JSONObject().putOpt("base64", base64Image).putOpt("md5", md5);
+                    paramJson.putOpt("image", image);
+                    JSONObject sendRe = JSONUtil.parseObj(HttpUtil.post("https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=a5ad8503-dc80-4d0a-adb9-8421dc0d7e2e", paramJson.toString()));
+                    System.out.println(sendRe);
+                }else
+                    inputStream.close();
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             } finally {
-//            Thread.sleep(2*60*1000);
                 chromeDriver.quit();
                 Thread.sleep(1000);
             }
-        }
+        } while (!"退出".equals(oris));
     }
 
     private static byte[] toByteArray(InputStream inputStream) throws Exception {
         byte[] buffer = new byte[1024];
         int len;
         try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
-;            while ((len = inputStream.read(buffer)) != -1) {
+            ;
+            while ((len = inputStream.read(buffer)) != -1) {
                 outputStream.write(buffer, 0, len);
             }
             return outputStream.toByteArray();

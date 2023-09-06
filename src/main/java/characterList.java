@@ -29,9 +29,9 @@ public class characterList {
 
     private static List<String> num = Arrays.asList(
             "1girl",  // 单个女孩
-            "2girls",  // 两个女孩
-            "3girls",  // 三个女孩
-            "multiple_girls" // 多个女孩
+            "2girls"  // 两个女孩
+//            "3girls",  // 三个女孩
+//            "multiple_girls" // 多个女孩
     );
 
     public static String character(){
