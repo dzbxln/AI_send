@@ -6,8 +6,6 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.events.WebDriverEventListener;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -23,7 +21,6 @@ import java.time.Duration;
 import java.util.Base64;
 import java.util.List;
 import java.util.Scanner;
-import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * 元数据：
@@ -93,7 +90,7 @@ public class AImain {
 //                Scanner scanner = new Scanner(System.in);
 //                String shuru = scanner.next();
                 //white_bodystocking,black_pantyhose,black_bodystocking,wide_shot,
-                String send = "nsfw,(((incredibly absurdres))),((huge filesize)),art-book,light_blush,off-shoulder shirt,medium breasts,gyaru,((white_stirrup_legwear)),(legs),unbuttoned clothes,";
+                String send = "(((incredibly absurdres))),((huge filesize)),light_blush,off-shoulder shirt,medium breasts,gyaru,((black_pantyhose)),(legs),unbuttoned clothes,";
                 send += hairList.hair();
                 send += eyesList.eyes();
                 send += characterList.character();
@@ -104,7 +101,7 @@ public class AImain {
                 Thread.sleep(2000);
 
                 elements2.get(1).click();
-                elements2.get(1).sendKeys("((ugly))),(((duplicate))),((morbid)),((mutilated)),(((tranny)))," +
+                elements2.get(1).sendKeys("nsfw,((ugly))),(((duplicate))),((morbid)),((mutilated)),(((tranny)))," +
                         "(((trans))),((trannsexual))),(((mutation))),(((deformed)))(((long neck))),((bad anatomy))(((bad proportions))),(((extra arms))),(((extra legs))), " +
                         "(((disfigured))),((more than 2 nipples))),malformed,mutated,(hermaphrodite),((extra limbs)).((missing arms)).((missing legs)).((poorly drawn hands))((poorty drawn face))," +
                         "(mutation,poorly drawn :1.2),(long body :1.3).multiple breasts,cloned face,gross proportions, mutated hands,bad hands,bad feet,long neck,missing limb," +
@@ -131,7 +128,7 @@ public class AImain {
 
                 chromeDriver.findElement(By.id("txt2img_seed")).findElement(By.xpath("//*[@class=\"svelte-og1zwl\"]")).clear();
                 Thread.sleep(200);
-                chromeDriver.findElement(By.id("txt2img_seed")).findElement(By.xpath("//*[@class=\"svelte-og1zwl\"]")).sendKeys("18319234825");
+                chromeDriver.findElement(By.id("txt2img_seed")).findElement(By.xpath("//*[@class=\"svelte-og1zwl\"]")).sendKeys("00069-2588803966");
                 Thread.sleep(2000);
                 chromeDriver.findElement(By.xpath("//*[@class=\"lg primary gradio-button svelte-1ipelgc\"]")).click();
 
@@ -161,7 +158,7 @@ public class AImain {
                         .findElement(By.id("sampler_selection_img2img"))
                         .findElement(By.id("img2img_steps")).findElements(By.className("svelte-1cl284s"));
                 element2.get(2).clear();
-                element2.get(2).sendKeys("80");
+                element2.get(2).sendKeys("60");
                 Thread.sleep(200);
                 List<WebElement> elements4 =
                         tab_img2img.findElement(By.id("img2img_column_size")).findElement(By.id("img2img_width")).findElements(By.className("svelte-1cl284s"));
@@ -181,7 +178,7 @@ public class AImain {
 //                elements1.get(2).sendKeys("7");//提示词占比
                 List<WebElement> img2img_cfg_scale = tab_img2img.findElement(By.id("img2img_cfg_scale")).findElements(By.className("svelte-1cl284s"));
                 img2img_cfg_scale.get(2).clear();
-                img2img_cfg_scale.get(2).sendKeys("7");
+                img2img_cfg_scale.get(2).sendKeys("16");
                 Thread.sleep(200);
                 List<WebElement> img2img_denoising_strength = tab_img2img.findElement(By.id("img2img_denoising_strength")).findElements(By.className("svelte-1cl284s"));
                 img2img_denoising_strength.get(2).clear();
@@ -249,8 +246,8 @@ public class AImain {
 
                     JSONObject image = new JSONObject().putOpt("base64", base64Image).putOpt("md5", md5);
                     paramJson.putOpt("image", image);
-                    JSONObject sendRe = JSONUtil.parseObj(HttpUtil.post("https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=a5ad8503-dc80-4d0a-adb9-8421dc0d7e2e", paramJson.toString()));
-                    System.out.println(sendRe);
+//                    JSONObject sendRe = JSONUtil.parseObj(HttpUtil.post("https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=a5ad8503-dc80-4d0a-adb9-8421dc0d7e2e", paramJson.toString()));
+//                    System.out.println(sendRe);
                 }else
                     inputStream.close();
             } catch (InterruptedException e) {
